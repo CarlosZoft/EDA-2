@@ -1,0 +1,9 @@
+// Tempo de execução
+$time ./meuprograma
+
+// Inserir entrada
+$./meuprograma <entrada
+
+// Exportar saida
+
+$./meuprograma >saida
