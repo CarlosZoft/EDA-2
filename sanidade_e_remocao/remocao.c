@@ -67,6 +67,7 @@ void mergeSort(no *v, int left, int right){
   }
 }
 void reverse(no *arr, int n){
+    int n = lengthOfList;
     no aux[n];
     for (int i = 0; i < n; i++) {
       aux[n - 1 - i] = arr[i];

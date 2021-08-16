@@ -4,12 +4,12 @@ int sep( int v[], int p, int r) {
     int q, i, j, t;
     i = p; q = (p + r) / 2; j = r;
     do {
-    while (v[i] < v[q]) ++i;
-    while (v[j] > v[q]) --j;
-    if (i <= j) {
+      while (v[i] < v[q]) ++i;
+      while (v[j] > v[q]) --j;
+      if (i <= j) {
         t = v[i], v[i] = v[j], v[j] = t;
         ++i, --j;
-    }
+      }
     } while (i <= j);
     return i-1;
 }

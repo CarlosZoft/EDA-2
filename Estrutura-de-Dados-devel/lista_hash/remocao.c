@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define hash(v,M) (618033*(unsigned)v%M)
+#define hash(v,M) (618033 * (unsigned)v % M)
 
 typedef struct item
 {

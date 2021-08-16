@@ -79,7 +79,7 @@ void mergeSort(no *v, long long int left, long long int right){
 }
 void reverse(no *arr){
     long long int n = lengthOfList;
-    no aux[n];
+    no *aux = malloc(sizeof(no) * lengthOfList);
     for (long long int i = 0; i < n; i++) {
       aux[n - 1 - i] = arr[i];
     }
@@ -115,10 +115,11 @@ void verifica(){
   printf("sana\n");
 }
 int main () {
-  no v[260000];
+  no *v = malloc(sizeof(no) * 2);
   long long int i = 0;
 
   while(scanf(" %llx %llx %llx", &v[i].curr, &v[i].prev, &v[i].next)!= EOF){
+    v = realloc(v, (i + 2) * sizeof(no));
     if(i == 0)PTR1 = v[i];
     else if (i == 1)PTR2 = v[i]; 
     i++;
