@@ -43,31 +43,10 @@ int separa(Item *V, int l, int r){
     return j;
 }
 
-int separaS(Item *V, int l, int r){
-
-    cmpexchS(V[(r+l)/2],V[r]);
-    cmpexchS(V[l],V[(r+l)/2]);
-    cmpexchS(V[r],V[(r+l)/2]);
-    Item c = V[r];
-    int j=l;
-    for(int k=l;k<r;k++){
-        if(lesseqS(V[k],c)){
-            exch(V[k],V[j]);
-            j++;
-        }
-    }
-    exch(V[j],V[r]);
-    return j;
-}
-
 void quickSelect(Item *v, int l, int r, int p){
 
     if(r<=l) return;
-    int i;
-
-
-    i = separa(v,l,r);
-
+    int i = separa(v,l,r);
 
     if(i>p){
         quickSelect(v,l,i-1,p);
@@ -78,28 +57,6 @@ void quickSelect(Item *v, int l, int r, int p){
 
 
 }
-
-void quickSelectS(Item *v, int l, int r, int p){
-
-    if(r<=l) return;
-    int i;
-
-
-    i = separaS(v,l,r);
-
-
-
-    if(i>p){
-        quickSelectS(v,l,i-1,p);
-    }
-    if(i<p){
-        quickSelectS(v,i+1,r,p);
-    }
-
-
-}
-
-
 
 void insertionSorts(Item *V, int l, int r, int h){
     for(int i=l+h;i<=r;i++){
@@ -130,7 +87,7 @@ int main(int argc, char const *argv[])
     scanf("%ld", &k);
     Item *sementes = malloc(sizeof(Item)*4);
 
-    while(scanf("%ld %ld", & s,&n)==2){
+    while(scanf("%ld %ld", &s ,&n)==2){
         sementes[total].nota = n;
         sementes[total++].semente = s;
         if(total>= total%4){
@@ -138,7 +95,6 @@ int main(int argc, char const *argv[])
         }
     }
 
-    quickSelectS(sementes,0,total,k);
     quickSelect(sementes,0,total,k);
 
     // shellSort(sementes,0,k);
