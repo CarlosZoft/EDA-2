@@ -55,11 +55,11 @@ int main () {
   
   celula *PTR = filaShows -> prox;
 
-  // while(PTR != NULL){
-  //   if(PTR -> dado[strlen(PTR -> dado) - 1] == PTR -> prox -> dado[0] - 32){
+  while(PTR != NULL){
+    if(PTR -> dado[strlen(PTR -> dado) - 1] == PTR -> prox -> dado[0] - 32){
 
-  //   }
-  // }
+    }
+  }
 
 
   imprime1(filaShows);
