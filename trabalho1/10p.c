@@ -1,58 +1,71 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
  
-typedef struct celula {
-  char dado[27];
-  struct celula *prox;
-} celula;
+typedef struct no {
+  char cityName[27];
+  struct no *prox;
+} no;
 
-celula *cria_fila () {
-  celula *ptr = malloc (sizeof (celula));
-  ptr->prox = ptr;
-  return ptr;
-}
+no *head, *filaShows;
 
-void enfileira (celula **f, char *x){
-    celula *ptr = malloc(sizeof(celula));
-    ptr ->prox = (*f) -> prox;
-    (*f) -> prox = ptr;
-    (*f) -> dado = x;
-    *f = ptr;
-}
-
-int desenfileira (celula *f, char *y){
-    celula *lixo = f -> prox;
-    if(lixo == f) return 0;
-    *y  = lixo -> dado;
-    f -> prox = lixo -> prox;
-    free(lixo);
-    
-    return 1; 
-}
-
-void imprime_rec (celula *le){
-	
-	celula *elem = le->prox;
-  if(elem != NULL){
-		printf("%d -> ", elem ->dado);
-		imprime_rec(elem);
+void print(no *le){
+  no *ptr = le;
+  if(ptr != NULL){
+    printf("%s\n", ptr->cityName);
+    print(ptr->prox); 
   }
-  else
-    printf("NULL\n");
-  
+}
+
+void makeList(no *city) {
+  no *end = city;
+
+  while (end->prox != NULL)end = end -> prox;
+
+  for (no *list = city; list->prox != NULL; list = list -> prox){
+    if (
+      list -> cityName[strlen(list->cityName) - 1] == 
+      list -> prox->cityName[0] + 32
+    ){
+      end -> prox = list -> prox;
+      list -> prox = list -> prox->prox;
+      end -> prox->prox = NULL;
+
+      end = end->prox;
+    }
+  }
+}
+
+void scan(no *head, no *fila){
+  no *ptr = malloc(sizeof(no));
+  int i;
+  for(
+    i = scanf(" %s", fila->cityName);
+    i == 1;
+    ptr = malloc(sizeof(no))
+  ){
+    i = scanf(" %s", ptr->cityName);
+    ptr -> prox = NULL;
+    fila -> prox = ptr;
+    if(i != 1){
+      fila->prox = NULL;
+      break;
+    }
+    else fila = fila->prox;
+  }
+  fila = head;
+
+  filaShows = fila;
 }
 
 int main () {
-  celula *filaShows = cria_fila();
+  filaShows = head = malloc(sizeof(no));
 
-  enfileira(filaShows, "pinoquio");
+  scan(head, filaShows);
+  
+  makeList(filaShows);
 
-  enfileira(filaShows, "irmao");
-
-  enfileira(filaShows, "violao");
-
-  imprime_rec(filaShows);
-
+  print(filaShows);
+  
   return 0;
-
 }
