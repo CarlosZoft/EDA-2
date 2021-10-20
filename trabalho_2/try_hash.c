@@ -18,9 +18,11 @@ typedef long int Item;
 typedef struct Position
 {
     Item x, y, pontuation;
-    int is_valid;
-
+    const char *key;
 } Position;
+
+Position pos_dominated;
+Position *val_pos_dominate;
 
 int heap_size = 0; 
 int value_allocated = 8;   
@@ -80,7 +82,10 @@ void printHeap(Position *arr)
       tmp = pop_heap(arr);
   
 }
-
+void printPosition(Position a)
+{
+  printf("key=%s\nx=%ld\ny=%ld\npontuation=%ld\n", a.key, a.x, a.y, a.pontuation);
+}
 void reallocate_heap(Position *heap)
 {
     heap = realloc(heap, sizeof(Position) * value_allocated);
@@ -101,7 +106,7 @@ typedef struct table {
   int size;
 } *table;
 // Tables ------------------------------------------------
-table dominated_positions, probing_positions, val_pos_probing, val_pos_dominate;
+table dominated_positions, probing_positions, val_pos_probing;
 
 static unsigned int hash(const char *key) {
   unsigned int hash = -1;
@@ -304,8 +309,7 @@ int dominate()
     if (heap_size < 1)return 0;
    
     Position best_pos = pop_heap(val_pos_dominate);
-
-    char str[100];
+    
     printf("dominar %ld %ld\n", best_pos.x, best_pos.y);
 
     char tipo[10];
@@ -315,7 +319,7 @@ int dominate()
     pos_dominated.pontuation = pontuation;
     pos_dominated.x = best_pos.x;
     pos_dominated.y = best_pos.y;
-    edazinhos++;
+    pos_dominated.key = best_pos.key;
 
     return 1;
 }
@@ -323,9 +327,10 @@ int dominate()
 void probing()
 {   
     if(!map_size(val_pos_probing)) return;
-    char *key = map_first(val_pos_probing);
+    const char *key = map_first(val_pos_probing);
+    printf("key ===  %s", key);
     node *position = map_remove(val_pos_probing ,key);
-    map_set(probing_positions, key, &position->value, position->x, position->y);
+    map_set(probing_positions, key, position->value, position->x, position->y);
     printf("sondar %ld %ld\n", position->x, position->y);
     
     char tipo[10]; 
@@ -336,7 +341,8 @@ void probing()
     temp.x = linha;
     temp.y = coluna;
     temp.pontuation = pontuation;
-    
+    temp.key = key;
+    printPosition(temp);
     insert_heap(val_pos_dominate, temp);
 }
 
@@ -350,7 +356,7 @@ void run_strategy()
     
     if (is_dominated)
     {
-        insert_set(dominated_positions, pos_dominated.x, pos_dominated.y, pos_dominated.pontuation);
+        map_set(dominated_positions, pos_dominated.key, &pos_dominated.pontuation, pos_dominated.x, pos_dominated.y);
         generate_adj(val_pos_probing, pos_dominated.x, pos_dominated.y);
     }
     printf("fimturno\n");
@@ -362,7 +368,7 @@ int main () {
   dominated_positions = map_create();
   probing_positions = map_create();
   val_pos_probing = map_create();
-  val_pos_dominate = map_create();
+  val_pos_dominate = malloc(sizeof(Position) * value_allocated);
 
   Item pontuation, turns, x, y;
 
@@ -375,8 +381,8 @@ int main () {
   strY[0] = strX[0] = aux[0] = '\0';
   generate_adj(val_pos_probing, x, y);
 
-  // while(turns--)
-  //       run_strategy();
+  while(turns--)
+        run_strategy();
   
   printf("valor encontrado = %ld\n", *map_get(dominated_positions, "5-5")->value);
   printf("valor encontrado = %ld\n", *map_get(val_pos_probing, "4-4")->value);
