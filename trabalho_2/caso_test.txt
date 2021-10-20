@@ -1,0 +1,16 @@
+5 5 10 5
+sondagem 6 6 200300
+dominacao 200300
+sondagem 6 5 145000
+dominacao 145000
+sondagem 7 7 400
+sondagem 7 6 -400
+dominacao 400
+sondagem 7 5 600
+sondagem 6 7 23232
+sondagem 6 4 21231
+dominacao 23232
+sondagem 8 8 2000
+sondagem 8 7 3000
+sondagem 8 6 4000
+sondagem 7 8 5000

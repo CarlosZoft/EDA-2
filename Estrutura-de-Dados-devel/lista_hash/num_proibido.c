@@ -3,9 +3,9 @@
 
 #define hash(v,M) (618033*(unsigned)v%M)
 
-typedef int Item; // Struct{ int chave; char nome[100]}
+typedef int Item; 
 
-#define key(A)(A) // Key(A) (A.chave)
+#define key(A)(A) 
 
 Item NULLitem = -1;
 
