@@ -41,12 +41,10 @@ struct graph
 
 link New(int v,int custo,int dir, link next){
     link x = malloc(sizeof(*x));
-    
-    // if(x==NULL) tela_azul();
 
     x->v = v;
     x->c = custo;
-    x->d= dir;
+    x->d = dir;
     x->next = next;
 
     return x;
@@ -65,7 +63,7 @@ Graph GRAPHInit(int V){
     return G;
 }
 
-void GRAPHInsertE(Graph G, Edge E, int custo,int dir){
+void GRAPHInsertE(Graph G, Edge E, int custo, int dir){
     int v = E.v;
     int w = E.w;
     G->adj[v] = New(w,custo,dir,G->adj[v]);
@@ -76,8 +74,8 @@ void GRAPHInsertE(Graph G, Edge E, int custo,int dir){
 }
 
 struct Node{
- int num;
- struct Node *prox;
+    int num;
+    struct Node *prox;
 };
 typedef struct Node node;
 

@@ -40,8 +40,6 @@ struct graph
 
 link New(int v, link next){
     link x = malloc(sizeof(*x));
-    
-    // if(x==NULL) tela_azul();
 
     x->v = v;
     x->next = next;
@@ -55,7 +53,7 @@ Graph GRAPHInit(int V){
     G->V = V;
     G->E = 0;
     G->adj = malloc(V*sizeof(link));
-    for(v =0 ; v<V ;v++){
+    for(v = 0 ; v<V ;v++){
         G->adj[v] = NULL;
     }
 
@@ -72,38 +70,31 @@ void GRAPHInsertE(Graph G, Edge E){
 
 }
 
-
 int *pre;
-int cnt;
+int conectado;
 int conexos;
 
-void dfsR( Graph G, Edge E){    //LISTA DE ADJACENCIAS
-    int t,w= E.w;
-    pre[w] = cnt++;
+void dfsR( Graph G, Edge E){
+    int t, w = E.w;
+    pre[w] = conectado++;
     link l;
 
-    for(l = G->adj[w];l!=NULL;l=l->next){
+    for(l = G -> adj[w] ; l != NULL ; l = l->next){
         t = l->v;
-        if(pre[t]==-1){
-            dfsR(G,EDGE(w,t));
-        }
+        if(pre[t] == -1)
+            dfsR(G, EDGE(w, t));
     }
 
     
 }
 
-
-
 void GRAPHSearch(Graph G){
     int v;
     conexos = 0;
-    cnt=0;
-    // for(v=0;v<G->V;v++){
-    //     pre[v]=-1;
-    // }
-    for(v=0;v<G->V;v++){
-        if(pre[v]==-1){
-            dfsR(G,EDGE(v,v));
+    conectado = 0;
+    for(v=0; v<G->V; v++){
+        if(pre[v] == -1){
+            dfsR(G, EDGE(v,v));
             conexos++; 
         }
     }
@@ -119,7 +110,7 @@ int main(int argc, char const *argv[])
 
     pre = malloc(sizeof(int)*v);
 
-    for(int i=0;i<v;i++) pre[i]= -1;
+    for(int i = 0 ; i < v ; i++) pre[i]= -1;
 
     while(scanf("%d %d", &x, &y)==2){
         GRAPHInsertE(G,EDGE(x,y));

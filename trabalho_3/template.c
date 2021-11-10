@@ -97,6 +97,39 @@ int GRAPHEdges(Edge *a, Graph G){
     return E;
 }
 
+int *pre;
+int cnt;
+int conexos;
+
+void dfsR( Graph G, Edge E){
+    int t, w = E.w;
+    pre[w] = cnt++;
+    link l;
+
+    for(l = G -> adj[w] ; l != NULL ; l = l->next){
+        t = l->v;
+        if(pre[t] == -1){
+            dfsR(G,EDGE(w,t));
+        }
+    }
+
+    
+}
+
+
+
+void GRAPHSearch(Graph G){
+    int v;
+    conexos = 0;
+    cnt=0;
+    for(v=0; v<G->V; v++){
+        if(pre[v] == -1){
+            dfsR(G, EDGE(v,v));
+            conexos++; 
+        }
+    }
+}
+
 int main(int argc, char const *argv[])
 {
     Graph G = initGraph(n);
